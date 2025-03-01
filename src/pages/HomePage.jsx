@@ -4,9 +4,14 @@ import Stats from '../components/Stats';
 import Groups from '../components/Groups';
 import Leaderboard from '../components/Leaderboard';
 import Challenges from '../components/Challenges';
+import UserNavbar from '../components/UserNavbar';
+import UserPage from '../components/UserPage';
 
 function HomePage() {
   return (
+    <>
+    <UserNavbar/>
+    <UserPage/>
     <main>
       <Hero />
       <Stats />
@@ -19,6 +24,7 @@ function HomePage() {
       <h2 className="section-title">Active Challenges</h2>
       <Challenges />
     </main>
+    </>
   );
 }
 

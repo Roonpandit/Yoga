@@ -9,6 +9,8 @@ import HomePage from './pages/HomePage'
 import MyGroupsPage from './pages/MyGroupsPage'
 import ExploreAsanasPage from './pages/ExploreAsanasPage'
 import ChallengesPage from './pages/ChallengesPage'
+import UserProfile from './components/UserProfile'
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="/my-groups" element={<MyGroupsPage />} />
         <Route path="/explore-asanas" element={<ExploreAsanasPage />} />
         <Route path="/challenges" element={<ChallengesPage />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {/* <Footer /> */}
