@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
 import { auth, googleProvider } from "./firebase/firebase-config";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -15,8 +15,15 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/user");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      if (!user.emailVerified) {
+        alert("Please verify your email before logging in.");
+        return;
+      }
+
+      navigate("/users");
     } catch (error) {
       alert(error.message);
     }
@@ -25,7 +32,20 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/user");
+      navigate("/users");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  // Forgot Password Function
+  const handleForgotPassword = async () => {
+    const emailPrompt = prompt("Enter your email to reset your password:");
+    if (!emailPrompt) return; // If user cancels the prompt
+
+    try {
+      await sendPasswordResetEmail(auth, emailPrompt);
+      alert("Password reset email sent! Check your inbox.");
     } catch (error) {
       alert(error.message);
     }
@@ -59,10 +79,12 @@ const Login = () => {
         <button onClick={handleLogin}>Login</button>
 
         <span className="google-login-btn" onClick={handleGoogleLogin}>
-        Login with  <FcGoogle className="google-logo" size={20} />
-  
-</span>
+          Login with <FcGoogle className="google-logo" size={20} />
+        </span>
 
+        <p>
+          <a href="#" onClick={handleForgotPassword}>Forgot Password?</a>
+        </p>
 
         <p>
           Don't have an account? <a href="/signup">Sign up</a>

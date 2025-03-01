@@ -1,7 +1,8 @@
 import React from 'react';
-
+import NavUser from './User/Nav-User';
 function AsanaItem({ difficulty, name, user }) {
   return (
+    
     <div className="asana-item">
       <span className={`asana-difficulty difficulty-${difficulty}`}>{difficulty}</span>
       <span className="asana-name">{name}</span>
@@ -12,6 +13,8 @@ function AsanaItem({ difficulty, name, user }) {
 
 function GroupCard({ group, type }) {
   return (
+    <>
+    
     <div className="group-card">
       <div className="group-header">
         <div className="group-name">{group.name}</div>
@@ -33,6 +36,8 @@ function GroupCard({ group, type }) {
         <a href="#" className="join-button">Join Group</a>
       )}
     </div>
+    </>
+    
   );
 }
 

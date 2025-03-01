@@ -1,8 +1,13 @@
 import React from 'react';
 import Groups from '../components/Groups';
+import NavUser from '../components/User/Nav-User';
 
 function MyGroupsPage() {
   return (
+
+    <>
+    
+    <NavUser/>
     <main>
       <h1 className="page-title">My Groups</h1>
       
@@ -50,6 +55,8 @@ function MyGroupsPage() {
         </form>
       </div>
     </main>
+    </>
+    
   );
 }
 

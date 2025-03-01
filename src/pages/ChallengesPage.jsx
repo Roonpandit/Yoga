@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Challenges from '../components/Challenges';
+import NavUser from '../components/User/Nav-User';
 
 function ChallengesPage() {
   const [activeTab, setActiveTab] = useState('active');
@@ -28,6 +29,10 @@ function ChallengesPage() {
   ];
 
   return (
+
+    <>
+    
+    <NavUser/>
     <main>
       <h1 className="page-title">Challenges</h1>
       
@@ -143,6 +148,8 @@ function ChallengesPage() {
         </form>
       </div>
     </main>
+    </>
+    
   );
 }
 

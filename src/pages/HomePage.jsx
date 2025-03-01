@@ -4,10 +4,12 @@ import Stats from '../components/Stats';
 import Groups from '../components/Groups';
 import Leaderboard from '../components/Leaderboard';
 import Challenges from '../components/Challenges';
+import NavUser from '../components/User/Nav-User';
 
 function HomePage() {
   return (
     <main>
+      <NavUser/>
       <Hero />
       <Stats />
       <h2 className="section-title">Your Active Groups</h2>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NavUser from '../components/User/Nav-User';
 
 function AsanaCard({ asana }) {
   return (
@@ -74,6 +75,9 @@ function ExploreAsanasPage() {
   });
 
   return (
+
+    <>
+    <NavUser/>
     <main>
       <h1 className="page-title">Explore Asanas</h1>
       
@@ -110,6 +114,8 @@ function ExploreAsanasPage() {
         ))}
       </div>
     </main>
+    </>
+    
   );
 }
 
