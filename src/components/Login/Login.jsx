@@ -1,30 +1,22 @@
 import { useState } from "react";
-import { 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  createUserWithEmailAndPassword 
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "./firebase/firebase-config";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Navbar from "../box/Navbar";
+import { FcGoogle } from "react-icons/fc";
+import { Eye, EyeOff } from "lucide-react";
 
-const LoginSignup = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleAuth = async () => {
+  const handleLogin = async () => {
     try {
-      if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate("/user");
-      } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("Signup successful! You can now log in.");
-        setIsLogin(true);
-      }
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/user");
     } catch (error) {
       alert(error.message);
     }
@@ -41,22 +33,43 @@ const LoginSignup = () => {
 
   return (
     <>
-      <Navbar />
       <div className="login-container">
-        <h2>{isLogin ? "Login" : "Signup"}</h2>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={handleAuth}>{isLogin ? "Login" : "Signup"}</button>
-        {isLogin && <button onClick={handleGoogleLogin}>Login with Google</button>}
-        <p>
-          {isLogin ? "Don't have an account?" : "Already have an account?"} 
-          <span onClick={() => setIsLogin(!isLogin)} className="toggle-link">
-            {isLogin ? " Sign up" : " Login"}
+        <h2>Login</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <div className="password-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span
+            type="button"
+            className="show-password-btn"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </span>
+        </div>
+
+        <button onClick={handleLogin}>Login</button>
+
+        <span className="google-login-btn" onClick={handleGoogleLogin}>
+        Login with  <FcGoogle className="google-logo" size={20} />
+  
+</span>
+
+
+        <p>
+          Don't have an account? <a href="/signup">Sign up</a>
         </p>
       </div>
     </>
   );
 };
 
-export default LoginSignup;
+export default Login;
