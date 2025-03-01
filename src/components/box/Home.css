@@ -1,10 +1,10 @@
-.home {
+.home-login {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
-  .hero-section {
+  .home-login .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
                 url('https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80');
     background-size: cover;
@@ -18,22 +18,23 @@
     padding: 0 20px;
   }
 
-  .hero-content {
+  .home-login .hero-content {
     max-width: 600px;
   }
-  .hero-content h1 {
+  .home-login .hero-content h1 {
     font-family: 'Times New Roman', Times, serif;
     font-size: 3rem;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  .hero-content p {
+  .home-login .hero-content p {
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2rem;
+    color: white;
     margin-bottom: 30px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   }
-  .hero-button {
+  .home-login .hero-button {
     background-color: #4a9d76;
     color: white;
     border: none;
@@ -44,21 +45,21 @@
     transition: background-color 0.3s ease;
   }
 
-  .hero-button:hover {
+  .home-login .hero-button:hover {
     background-color: #3a8c65;
   }
 
-  .yoga-section {
+  .home-login .yoga-section {
     padding: 40px 20px;
     text-align: center;
   }
   
-  .section-title {
+  .home-login .section-title {
     font-size: 2rem;
     margin-bottom: 20px;
   }
   
-  .yoga-grid {
+  .home-login .yoga-grid {
     display: flex;
     flex-wrap: wrap;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -66,7 +67,7 @@
     justify-content: center;
   }
   
-  .yoga-card {
+  .home-login .yoga-card {
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -76,23 +77,23 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  .yoga-card:hover {
+  .home-login .yoga-card:hover {
     transform: scale(1.05);
   }
   
-  .yoga-image {
+  .home-login .yoga-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
   
-  .yoga-name {
+  .home-login .yoga-name {
     font-size: 1.2rem;
     margin: 10px 0;
   }
   
-  .learn-more {
+  .home-login .learn-more {
     background:#4a9d76;
     color: white;
     border: none;
@@ -103,17 +104,17 @@
     transition: background-color 0.3s ease;
   }
   
-  .learn-more:hover {
+  .home-login .learn-more:hover {
     background: #369569;
   }
   
-  .loading, .error, .no-data {
+ .loading, .error, .no-data {
     font-size: 1.2rem;
     margin-top: 20px;
     color: #4a9d76;
   }
   
-  .footer {
+  .home-login .footer {
     background: #222;
     color: white;
     text-align: center;

@@ -42,8 +42,13 @@
   border-radius: 4px;
   font-size: 18px;
   font-weight: 500;
+  font-family: 'Times New Roman', Times, serif;
   transition: all 0.3s ease;
+  border: none; /* Remove border if any */
+  background-color: transparent; /* Ensure no background */
+  cursor: pointer;
 }
+
 
 .navbars .nav-btn:hover {
   background-color: #f0f0f0;

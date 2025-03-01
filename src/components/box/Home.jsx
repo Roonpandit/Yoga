@@ -39,12 +39,12 @@ function Home() {
 
     <>
     <Navbar />
-    <div className="home">
+    <div className="home-login">
       <div className="hero-section">
         <div className="hero-content">
           <h1>Discover the Power of Yoga</h1>
           <p>Transform your mind, body, and soul with our expert-guided yoga practices</p>
-          <button className="hero-button">Start Your Journey</button>
+          <button className="hero-button"  onClick={() => navigate('/login')} >Start Your Journey</button>
         </div>
       </div>
       
