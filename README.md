@@ -16,7 +16,7 @@
   - [Authentication](#authentication)
   - [Cloud Messaging](#cloud-messaging-optional-for-future-updates)
 
-**YogaVerse** is a modern Yoga tracking and wellness application designed to empower users to maintain a healthy lifestyle through the practice of yoga. The app helps users log their Yogasanas, track their progress over time, and participate in community-driven challenges. YogaVerse aims to make yoga accessible and enjoyable for everyone, while promoting mindfulness, fitness, and overall well-being.
+##YogaVerse is a modern Yoga tracking and wellness application designed to empower users to maintain a healthy lifestyle through the practice of yoga. The app helps users log their Yogasanas, track their progress over time, and participate in community-driven challenges. YogaVerse aims to make yoga accessible and enjoyable for everyone, while promoting mindfulness, fitness, and overall well-being.
 
 YogaVerse provides a comprehensive platform where users can create and maintain their profiles, track their yoga journey, set goals, and engage with a vibrant yoga community. Whether you are a beginner looking to start your yoga practice or an experienced yogi aiming to deepen your knowledge, YogaVerse has everything you need to stay motivated, track progress, and meet your wellness goals.
 
