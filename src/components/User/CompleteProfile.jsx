@@ -7,6 +7,7 @@ import "./CompleteProfile.css";
 const CompleteProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState(""); // Role state
   const [dob, setDob] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
@@ -24,6 +25,7 @@ const CompleteProfile = () => {
           const data = userSnap.data();
           setName(data.name || "");
           setEmail(data.email || "");
+          setRole(data.role || ""); // Fetch user role
           setDob(data.dob || "");
           setHeight(data.height || "");
           setWeight(data.weight || "");
@@ -36,10 +38,11 @@ const CompleteProfile = () => {
   }, []);
 
   const handleUpdateProfile = async () => {
-    if (!dob || !height || !weight || !gender) {
+    if (!dob || !height || !weight || !gender || !role) {
       alert("All fields are required.");
       return;
     }
+    
     const user = auth.currentUser;
     if (!user) return;
 
@@ -47,6 +50,7 @@ const CompleteProfile = () => {
       uid: user.uid,
       name,
       email,
+      role, // Include role in profile update
       dob,
       height,
       weight,
@@ -59,7 +63,13 @@ const CompleteProfile = () => {
       await updateDoc(userRef, updatedData);
 
       alert("Profile updated successfully!");
-      navigate("/users");
+
+      // Redirect user based on role
+      if (role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/users");
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -74,6 +84,17 @@ const CompleteProfile = () => {
 
       <label>Email</label>
       <input type="email" value={email} disabled />
+
+      <label>Role</label>
+      {role ? (
+        <input type="text" value={role} disabled /> // Role is set, cannot change
+      ) : (
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="">Select Role</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      )}
 
       <label>Date of Birth</label>
       <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} />

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { auth, db } from "../Login/firebase/firebase-config"; 
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore"; 
-import "./Nav-User.css";
+import "./Nav-Admin.css";
 import userLogo from "../../assets/user-logo.jpg";
 
-function NavUser() {
+function NavAdmin() {
   const [userName, setUserName] = useState("Guest");
 
   useEffect(() => {
@@ -38,19 +38,19 @@ function NavUser() {
   }, []);
 
   return (
-    <nav className="nav-user">
+    <nav className="nav-admin">
       <div className="navbars-container">
         <Link  className="navbars-logo">YogaVerse</Link>
 
         <ul className="nav-links">
-          <li><Link to="/users">Home</Link></li>
-          <li><Link to="/my-groups">My Groups</Link></li>
-          <li><Link to="/explore-asanas">Explore Asanas</Link></li>
-          <li><Link to="/challenges">Challenges</Link></li>
+          <li><Link to="/admin">Home</Link></li>
+          <li><Link to="/add-group">Group</Link></li>
+          <li><Link to="/add-aasan">Aasan</Link></li>
+          <li><Link to="/add-challenges">Challenges</Link></li>
         </ul>
 
         <div className="profile-logo">
-          <Link to="/Profile">
+          <Link to="/admin">
             <img src={userLogo} alt="Profile" className="profile-image" />
             <span className="username">{userName}</span>
           </Link>
@@ -63,4 +63,4 @@ function NavUser() {
   );
 }
 
-export default NavUser;
+export default NavAdmin;

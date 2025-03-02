@@ -22,25 +22,30 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+  
       if (!user.emailVerified) {
         alert("Please verify your email before logging in.");
         return;
       }
-
-      // ✅ Check if profile is complete
+  
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists() && !userSnap.data().isProfileComplete) {
-        navigate("/complete-profile");
+  
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        if (!userData.isProfileComplete) {
+          navigate("/complete-profile");
+        } else {
+          userData.role === "admin" ? navigate("/admin") : navigate("/users");
+        }
       } else {
-        navigate("/users");
+        alert("User data not found.");
       }
     } catch (error) {
       alert(error.message);
     }
   };
+  
 
   // ✅ Google Login Function
   const handleGoogleLogin = async () => {
@@ -57,20 +62,20 @@ const Login = () => {
       const userSnap = await getDoc(userRef);
   
       if (!userSnap.exists()) {
-        // 🔹 Store user details if they don't exist
         await setDoc(userRef, {
-          name: user.displayName || "", // Store name
-          email: user.email || "", // Store email
+          name: user.displayName || "",
+          email: user.email || "",
           isProfileComplete: false,
+          role: "user", // Default role
         });
   
         navigate("/complete-profile", { state: { name: user.displayName, email: user.email } });
       } else {
         const userData = userSnap.data();
-        if (userData.isProfileComplete) {
-          navigate("/users");
-        } else {
+        if (!userData.isProfileComplete) {
           navigate("/complete-profile", { state: { name: userData.name, email: userData.email } });
+        } else {
+          userData.role === "admin" ? navigate("/admin") : navigate("/users");
         }
       }
     } catch (error) {
@@ -78,6 +83,7 @@ const Login = () => {
       alert(error.message);
     }
   };
+  
   
   
 
