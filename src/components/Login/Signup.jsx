@@ -59,7 +59,7 @@ const Signup = () => {
 
       <select onChange={(e) => setRole(e.target.value)}>
         <option value="user">User</option>
-        <option value="admin">Admin</option>
+        {/* <option value="admin">Admin</option> */}
       </select>
 
       <div className="password-container">
