@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { auth, db } from "../Login/firebase/firebase-config";
+import {
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import "./User.css";
 import NavUser from "./Nav-User";
 
 function User() {
+  const [user, setUser] = useState(null);
   const [poses, setPoses] = useState([]);
   const [filteredPoses, setFilteredPoses] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPose, setSelectedPose] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const posesPerPage = 10; // Updated to 10 poses per page
+
+  const [favoritePoses, setFavoritePoses] = useState(new Set());
+
+  const posesPerPage = 10;
 
   useEffect(() => {
     fetch(
@@ -17,9 +29,9 @@ function User() {
       .then((response) => response.json())
       .then((data) => {
         if (data && Array.isArray(data)) {
-          setPoses(data); // Assuming the API returns a flat array of poses
+          setPoses(data);
           setFilteredPoses(data);
-          setCurrentPage(1); // Reset to first page when new data loads
+          setCurrentPage(1);
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -37,17 +49,62 @@ function User() {
     setCurrentPage(1);
   }, [searchQuery, poses]);
 
-  // Calculate total pages
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        await loadFavorites(currentUser.uid);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const loadFavorites = async (userId) => {
+    try {
+      const favoritesRef = collection(db, `users/${userId}/favorites`);
+      const snapshot = await getDocs(favoritesRef);
+      const favoritesSet = new Set();
+      snapshot.forEach((doc) => favoritesSet.add(doc.id));
+      setFavoritePoses(favoritesSet);
+    } catch (error) {
+      console.error("Error loading favorites:", error);
+    }
+  };
+
+  const toggleFavorite = async (pose) => {
+    if (!user) {
+      alert("Please log in to save favorites.");
+      return;
+    }
+
+    const poseId = String(pose.id || pose.sanskrit_name_adapted);
+    const favoritesRef = doc(db, `users/${user.uid}/favorites`, poseId);
+
+    try {
+      if (favoritePoses.has(poseId)) {
+        await deleteDoc(favoritesRef);
+        setFavoritePoses((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(poseId);
+          return newSet;
+        });
+      } else {
+        await setDoc(favoritesRef, pose);
+        setFavoritePoses((prev) => new Set(prev).add(poseId));
+      }
+    } catch (error) {
+      console.error("Error updating favorite:", error);
+    }
+  };
+
   const totalPages = Math.ceil(filteredPoses.length / posesPerPage) || 1;
 
-  // Ensure currentPage is within valid range
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
   }, [filteredPoses, totalPages, currentPage]);
 
-  // Get poses for the current page
   const indexOfLastPose = currentPage * posesPerPage;
   const indexOfFirstPose = indexOfLastPose - posesPerPage;
   const currentPoses = filteredPoses.slice(indexOfFirstPose, indexOfLastPose);
@@ -72,18 +129,39 @@ function User() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
+
       <div className="poses-container">
-        {currentPoses.map((pose, index) => (
-          <div key={pose.id || index} className="pose-card">
-            <img
-              src={pose.url_png}
-              alt={pose.english_name}
-              className="pose-image"
-            />
-            <h3>{pose.sanskrit_name_adapted}</h3>
-            <button onClick={() => setSelectedPose(pose)}>See More</button>
-          </div>
-        ))}
+        {currentPoses.map((pose, index) => {
+          const poseId = String(pose.id || pose.sanskrit_name_adapted);
+          const isFavorited = favoritePoses.has(poseId);
+
+          return (
+            <div key={index} className="pose-card">
+              <img
+                src={pose.url_png}
+                alt={pose.english_name}
+                className="pose-image"
+              />
+              <h3>{pose.sanskrit_name_adapted}</h3>
+
+              <div className="pose-actions">
+                <button
+                  onClick={() => setSelectedPose(pose)}
+                  className="see-more"
+                >
+                  See More
+                </button>
+                <button
+                  className={`heart-btn ${isFavorited ? "favorited" : ""}`}
+                  onClick={() => toggleFavorite(pose)}
+                  data-tooltip={isFavorited ? "Remove from fav" : "Add to fav"}
+                >
+                  {isFavorited ? "❤️" : "🤍"}
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Pagination Controls */}

@@ -70,18 +70,22 @@ font-family: 'Times New Roman', Times, serif;
     border-radius: 8px;
   }
   
-  .user-page .poses-container button {
-    background:#4a9d76;
+  .user-page .pose-actions {
+    display: flex;  /* Align buttons side by side */
+    justify-content: space-around;
+}
+
+.user-page .pose-actions .see-more {
+    background: #4a9d76;
     color: white;
     border: none;
-    width: 100%;
-    padding: 5px;
+    padding: 5px 10px;
     margin-top: 10px;
     cursor: pointer;
     border-radius: 5px;
-  }
+}
   
-  .user-page .poses-container button:hover {
+  .user-page .poses-container .see-more:hover {
     background: #257650;
   }
   
@@ -163,6 +167,42 @@ font-family: 'Times New Roman', Times, serif;
   .user-page .pagination span {
     font-size: 16px;
     font-weight: bold;
+  }
+  
+  .heart-btn {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .heart-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    white-space: nowrap;
+  }
+  
+  .heart-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  
+  .heart-btn.favorited {
+    color: red; /* Make the heart red when favorited */
   }
   
   
