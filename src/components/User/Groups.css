@@ -1,129 +1,115 @@
-.asana-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* General Styles */
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
   background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Loading & Error Messages */
+.loading,
+.error {
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  margin-top: 20px;
+}
+
+/* Grid Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3-column layout */
+  gap: 20px;
   padding: 10px;
+}
+
+/* Group Cards */
+.group-card {
+  background: white;
+  padding: 15px;
   border-radius: 8px;
-  margin-bottom: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.asana-item .asana-difficulty {
-  font-weight: bold;
-  padding: 5px 10px;
+.group-card h2 {
+  color: #444;
+  font-size: 20px;
+}
+
+.group-card p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Buttons */
+.join-btn,
+.leave-btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
   border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.join-btn {
+  background: #28a745;
   color: white;
-  min-width: 30px;
-  text-align: center;
 }
 
-.asana-item .difficulty-1 {
-  background-color: green;
+.leave-btn {
+  background: #dc3545;
+  color: white;
 }
 
-.asana-item .difficulty-2 {
-  background-color: blue;
+.join-btn:hover {
+  background: #218838;
 }
 
-.asana-item .difficulty-3 {
-  background-color: orange;
+.leave-btn:hover {
+  background: #c82333;
 }
 
-.asana-item .difficulty-4 {
-  background-color: red;
+/* Group Details */
+.group-details {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.asana-item .difficulty-5 {
-  background-color: darkred;
-}
-
-.asana-item .asana-name {
-  flex-grow: 1;
-  text-align: center;
-  font-weight: bold;
+.group-details h2 {
   color: #444;
 }
 
-.asana-item .asana-user {
-  font-size: 0.9rem;
-  color: #777;
-}
-.groups-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-}
-.group-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  margin: 10px;
+.group-details p {
+  font-size: 16px;
+  color: #666;
 }
 
-.group-card .group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
 }
 
-.group-card .group-name {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for mobile */
+  }
 }
-
-.group-card .group-members {
-  font-size: 14px;
-  color: #777;
-}
-
-.group-card .group-activity {
-  margin-bottom: 16px;
-}
-
-.group-card .view-more,
-.group-card .join-button {
-  display: inline-block;
-  padding: 8px 16px;
-  text-align: center;
-  font-size: 14px;
-  text-decoration: none;
-  border-radius: 4px;
-  width: 100%;
-  margin-top: 8px;
-}
-
-.group-card .view-more {
-  background-color: #4a9d76;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.group-card .view-more:hover {
-  background-color: #35805d;
-}
-
-.group-card .join-button {
-  background-color: #4a9d76;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.group-card .join-button:hover {
-  background-color:#348760;
-}
-
-
-
-
-
-
