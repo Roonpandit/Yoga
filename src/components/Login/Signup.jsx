@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { auth } from "./firebase/firebase-config";
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { auth, db } from "./firebase/firebase-config";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import Navbar from "../box/Navbar";
 import { Eye, EyeOff } from "lucide-react";
 
 const Signup = () => {
@@ -29,7 +29,18 @@ const Signup = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Send verification email
+
+      await setDoc(doc(db, "users", user.uid), {
+        name,
+        email,
+        dob: "",
+        gender: "",
+        height: "",
+        weight: "",
+        isProfileComplete: false, // Flag to check if profile is complete
+      });
+
+      // ✅ Send verification email
       await sendEmailVerification(user);
       alert(`Signup successful! A verification email has been sent to ${email}. Please verify before logging in.`);
 

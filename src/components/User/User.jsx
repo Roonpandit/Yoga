@@ -28,7 +28,9 @@ function User() {
   useEffect(() => {
     const filtered = poses.filter(
       (pose) =>
-        pose.sanskrit_name_adapted.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        pose.sanskrit_name_adapted
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
         pose.english_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredPoses(filtered);
@@ -51,13 +53,16 @@ function User() {
   const currentPoses = filteredPoses.slice(indexOfFirstPose, indexOfLastPose);
 
   return (
-    <>
+    <div className="user-page">
       <NavUser />
       <section className="hero">
-      <h1>Transform Your Yoga Journey Together</h1>
-      <p>Track your progress, share your achievements, and challenge your friends. Join our vibrant community to gamify your wellness journey and discover new asanas.</p>
-    </section>
-
+        <h1>Transform Your Yoga Journey Together</h1>
+        <p>
+          Track your progress, share your achievements, and challenge your
+          friends. Join our vibrant community to gamify your wellness journey
+          and discover new asanas.
+        </p>
+      </section>
 
       <div className="search-bar">
         <input
@@ -70,7 +75,11 @@ function User() {
       <div className="poses-container">
         {currentPoses.map((pose, index) => (
           <div key={pose.id || index} className="pose-card">
-            <img src={pose.url_png} alt={pose.english_name} className="pose-image" />
+            <img
+              src={pose.url_png}
+              alt={pose.english_name}
+              className="pose-image"
+            />
             <h3>{pose.sanskrit_name_adapted}</h3>
             <button onClick={() => setSelectedPose(pose)}>See More</button>
           </div>
@@ -80,11 +89,22 @@ function User() {
       {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="pagination">
-          <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
             Previous
           </button>
-          <span> Page {currentPage} of {totalPages} </span>
-          <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+          <span>
+            {" "}
+            Page {currentPage} of {totalPages}{" "}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
             Next
           </button>
         </div>
@@ -97,14 +117,24 @@ function User() {
             <span className="close-btn" onClick={() => setSelectedPose(null)}>
               &times;
             </span>
-            <h2>{selectedPose.sanskrit_name_adapted} ({selectedPose.english_name})</h2>
-            <img src={selectedPose.url_png} alt={selectedPose.english_name} className="modal-image" />
-            <p><strong>Benefits:</strong> {selectedPose.pose_benefits}</p>
-            <p><strong>Description:</strong> {selectedPose.pose_description}</p>
+            <h2>
+              {selectedPose.sanskrit_name_adapted} ({selectedPose.english_name})
+            </h2>
+            <img
+              src={selectedPose.url_png}
+              alt={selectedPose.english_name}
+              className="modal-image"
+            />
+            <p>
+              <strong>Benefits:</strong> {selectedPose.pose_benefits}
+            </p>
+            <p>
+              <strong>Description:</strong> {selectedPose.pose_description}
+            </p>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

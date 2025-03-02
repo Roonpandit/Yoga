@@ -26,6 +26,7 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    font-family: 'Times New Roman', Times, serif;
   }
   
   .nav-user .nav-buttons {
@@ -60,12 +61,42 @@
     background-color: #c92936;
     color: white;
     text-decoration: none;
-    padding: 8px 16px;
+    padding: 2px 16px;
     border-radius: 4px;
-    font-weight: 500;
+    font-weight: 800;
     transition: all 0.3s ease;
+    font-family: 'Times New Roman', Times, serif;
   }
   
   .nav-user .nav-button-signup:hover {
     background-color: #be1a27;
+  }
+
+  .nav-user .profile-logo{
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  .nav-user .profile-logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+  .nav-user .profile-image {
+    width: 30px; /* Adjust size as needed */
+    height: 30px;
+    border-radius: 50%; /* Makes the image circular */
+    cursor: pointer;
+    object-fit: cover; /* Ensures the image scales well */
+  }
+  .nav-user .username{
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 20px;
+    transition: color 0.3s ease; 
   }
