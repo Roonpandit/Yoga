@@ -17,7 +17,6 @@ function User() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPose, setSelectedPose] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [favoritePoses, setFavoritePoses] = useState(new Set());
 
   const posesPerPage = 10;
@@ -28,14 +27,25 @@ function User() {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data && Array.isArray(data)) {
-          setPoses(data);
-          setFilteredPoses(data);
-          setCurrentPage(1);
+        console.log(data);  // Log the raw data for debugging
+  
+        // Check if the data has numeric or random object keys
+        if (data && typeof data === "object") {
+          // Extract only the values from the object (i.e., pose data)
+          const posesArray = Object.values(data); 
+          setPoses(posesArray); // Update poses state
+          setFilteredPoses(posesArray); // Set filtered poses initially
+          setCurrentPage(1); // Reset page to 1
+          console.log("Fetched poses:", posesArray); // Log poses after setting
+        } else {
+          console.error("Invalid data structure", data); // Log error if the structure doesn't match
         }
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
+  
 
   useEffect(() => {
     const filtered = poses.filter(
@@ -46,7 +56,7 @@ function User() {
         pose.english_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredPoses(filtered);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset page when search query changes
   }, [searchQuery, poses]);
 
   useEffect(() => {
@@ -131,37 +141,41 @@ function User() {
       </div>
 
       <div className="poses-container">
-        {currentPoses.map((pose, index) => {
-          const poseId = String(pose.id || pose.sanskrit_name_adapted);
-          const isFavorited = favoritePoses.has(poseId);
+        {currentPoses.length > 0 ? (
+          currentPoses.map((pose, index) => {
+            const poseId = String(pose.id || pose.sanskrit_name_adapted);
+            const isFavorited = favoritePoses.has(poseId);
 
-          return (
-            <div key={index} className="pose-card">
-              <img
-                src={pose.url_png}
-                alt={pose.english_name}
-                className="pose-image"
-              />
-              <h3>{pose.sanskrit_name_adapted}</h3>
+            return (
+              <div key={index} className="pose-card">
+                <img
+                  src={pose.url_png}
+                  alt={pose.english_name}
+                  className="pose-image"
+                />
+                <h3>{pose.sanskrit_name_adapted}</h3>
 
-              <div className="pose-actions">
-                <button
-                  onClick={() => setSelectedPose(pose)}
-                  className="see-more"
-                >
-                  See More
-                </button>
-                <button
-                  className={`heart-btn ${isFavorited ? "favorited" : ""}`}
-                  onClick={() => toggleFavorite(pose)}
-                  data-tooltip={isFavorited ? "Remove from fav" : "Add to fav"}
-                >
-                  {isFavorited ? "❤️" : "🤍"}
-                </button>
+                <div className="pose-actions">
+                  <button
+                    onClick={() => setSelectedPose(pose)}
+                    className="see-more"
+                  >
+                    See More
+                  </button>
+                  <button
+                    className={`heart-btn ${isFavorited ? "favorited" : ""}`}
+                    onClick={() => toggleFavorite(pose)}
+                    data-tooltip={isFavorited ? "Remove from fav" : "Add to fav"}
+                  >
+                    {isFavorited ? "❤️" : "🤍"}
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p>No poses available</p>  // Fallback message if no poses are found
+        )}
       </div>
 
       {/* Pagination Controls */}
